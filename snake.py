@@ -53,6 +53,20 @@ change_to = direction
 
 score = 0
 
+#Ganar el juego
+def victoria():
+    my_font = pygame.font.SysFont('times new roman', 50) #Copia de lo hecho en game_over
+    game_over_surface = my_font.render('Ganaste', True, white)
+    game_over_rect = game_over_surface.get_rect()
+    game_over_rect.midtop = (frame_size_x/2, frame_size_y/4)
+    game_window.fill(black)
+    game_window.blit(game_over_surface, game_over_rect)
+    show_score(0, red, 'consolas', 20)
+    pygame.display.flip()
+    time.sleep(3)
+    pygame.quit()
+    sys.exit()
+
 #Pausa
 def pausar(): #Función
     pausado = True #Variable que define el proceso pausa
@@ -103,7 +117,6 @@ def game_over():
                 sys.exit()
     time.sleep(5)
     pygame.quit()
-<<<<<<< HEAD
     sys.exit()	
 
 # Mensaje
@@ -117,23 +130,6 @@ def show_msg(choice, color, font, size):
         msg_rect.midtop = (frame_size_x/2, frame_size_y/1.25)
     game_window.blit(msg_surface, msg_rect)
     # pygame.display.flip()
-=======
-    sys.exit()
-
-#Ganar el juego
-def victoria():
-    my_font = pygame.font.SysFont('times new roman', 50) #Copia de lo hecho en game_over
-    game_over_surface = my_font.render('Ganaste', True, white)
-    game_over_rect = game_over_surface.get_rect()
-    game_over_rect.midtop = (frame_size_x/2, frame_size_y/4)
-    game_window.fill(black)
-    game_window.blit(game_over_surface, game_over_rect)
-    show_score(0, red, 'consolas', 20)
-    pygame.display.flip()
-    time.sleep(3)
-    pygame.quit()
-    sys.exit()
->>>>>>> victoria-pantalla
     
 # Score
 def show_score(choice, color, font, size):
@@ -227,18 +223,20 @@ while True:
     pygame.draw.rect(game_window, white, pygame.Rect(food_pos[0], food_pos[1], 10, 10))
 
     # Game Over conditions
-    # Salir de los limites
+    # Getting out of bounds
     if snake_pos[0] < 0 or snake_pos[0] > frame_size_x-10:
         game_over()
     if snake_pos[1] < 0 or snake_pos[1] > frame_size_y-10:
         game_over()
-    # Al tocar tocarse la serpiente a si misma
+    # Touching the snake body
     for block in snake_body[1:]:
         if snake_pos[0] == block[0] and snake_pos[1] == block[1]:
             game_over()
+
 	#Si se consiguen 10 puntos
     if score==10:
-        victoria()
+        victoria()	
+		
     show_score(1, white, 'consolas', 20)
     # Refresh game screen
     pygame.display.update()
